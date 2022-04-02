@@ -102,9 +102,9 @@ def get_dataset(request):
     # print(df)
     return df
 
-from nltk.tokenize import word_tokenize
+
 def extract_skills(skills):
-    words = word_tokenize(skills)
+    words = skills.split(" ")
     processed_words = []
     for word in words:
         if word not in [',', '(', ')', '-', '.']:
@@ -154,7 +154,7 @@ from nltk.tokenize import word_tokenize
 
 
 def extract_description(description):
-    words = word_tokenize(description)
+    words = description.split(" ")
     processed_words = []
     for word in words:
         if word not in ['(', ')', ',', '.',':',' ']:
