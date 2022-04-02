@@ -22,7 +22,9 @@
 
                     <input class="btn btn--sub btn--lg" type="submit" value="Search" />
                 </form>
-
+                {% if request.user.is_authenticated %}
+                <a href="{%url 'recommend' current_user.id %}" class="btn btn--sub btn--lg" style="background-color: rgb(35, 109, 161); border-radius: 15px; ">RECOMMENDATIONS</a>
+                {% endif %}
             </div>
         </div>
     </section>

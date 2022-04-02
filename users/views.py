@@ -8,8 +8,8 @@ from django.urls import conf
 from django.db.models import Q
 from .models import Profile, Message
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm
-from .utils import searchProfiles, paginateProfiles
-
+from .utils import recommendation, searchProfiles, paginateProfiles, get_dataset
+import pandas as pd
 
 def loginUser(request):
     page = 'login'
@@ -70,12 +70,52 @@ def registerUser(request):
 
 def profiles(request):
     profiles, search_query = searchProfiles(request)
-
-    custom_range, profiles = paginateProfiles(request, profiles, 3)
+    # print(profiles)
+    custom_range, profiles = paginateProfiles(request, profiles, 6)
+    try:
+        current_user = Profile.objects.get(user_id = request.user.id)
+    except:
+        current_user = None
     context = {'profiles': profiles, 'search_query': search_query,
-               'custom_range': custom_range}
+               'custom_range': custom_range , 'current_user': current_user}
+    
+
+    # print(request.user.id)
+    # print(Profile.objects.get(user_id = request.user.id))
+    
     return render(request, 'users/profiles.html', context)
 
+def recommend(request,pk):
+    dataset = get_dataset(request)
+    # print("The dataset is:", dataset)
+    current_user_data = {'Name': ['Syed Khundmir Azmi'],
+             'Description': ['A motivated individual looking for an opportunity in Data Science with full end to end development practical knowledge'],
+              'Skills': ['Python, Java'],
+              'Projects': ['Customer Churn Prediction, SMS Spam Prediction'],
+              'Location': ['Hyderabad, India']
+             }
+    
+    # print(pd.DataFrame(recommendation(current_user_data, dataset)))
+    df =  pd.DataFrame(recommendation(current_user_data, dataset))
+
+    myprofiles = recommendation(current_user_data, dataset)
+    # print(myprofiles)
+    query = []
+    current_user = Profile.objects.get(user_id = request.user.id)
+    for unique_id in myprofiles:
+        
+        myquery = Profile.objects.get(id = unique_id)
+        if myquery.id != current_user.id:
+            query.append(myquery.id)
+        
+    my_profiles = Profile.objects.filter(id__in = query)
+           
+
+    custom_range, profiles = paginateProfiles(request, my_profiles, 3)
+
+    
+
+    return render(request, 'users/recommendations.html', context={"profiles": profiles})
 
 def userProfile(request, pk):
     profile = Profile.objects.get(id=pk)

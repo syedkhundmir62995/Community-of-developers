@@ -1,0 +1,30 @@
+{% extends 'luxuryline/main.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+<body>
+    
+    {% block content %}
+    <h2 style="display: inline-block; position: absolute; padding: 15px 15px;">LOGIN</h2>
+    <div class="login">
+        <h2 id = 'login-h2'>Welcome Back</h2><br>
+        <h4 id = 'login-h4'>Enter your credentials to access your account</h4>
+        <form action="{% url 'loginpage' %}" method="post">
+            {% csrf_token %}
+            <!-- <label for="mail">Email Address</label><br> -->
+            <input type="text" name="uname" id="uname" placeholder="Enter your username" class="login-input" style="background-image: url('../../static/loginapp/email.png');" required><br>
+            <!-- <label for="passd">Password</label><br> -->
+            <input type="password" name="passd" id="passd" placeholder="Enter your password" class="login-input" style="background-image: url('../../static/loginapp/password1.png');" required><br>
+            <input type="submit" value="Login to Luxury Line" id="submit-btn"><br>
+            <span id="login-span">Don't have an account? <a href="{% url 'signuppage' %}">Create Account</a></span><br>
+            <span id="login-span">Forgot your password? <a href="#">Reset Password</a></span>
+        </form>
+    </div>
+    {% endblock content %}
+</body>
+</html>
