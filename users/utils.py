@@ -149,11 +149,9 @@ def extract_location(locations):
     
     return L
 
-# import nltk
+
 from nltk.tokenize import word_tokenize
-# nltk.download('stopwords')
-# from nltk.corpus import stopwords
-# stop_words = nltk.corpus.stopwords.words('english')
+
 
 def extract_description(description):
     words = word_tokenize(description)
