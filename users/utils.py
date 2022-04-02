@@ -149,10 +149,6 @@ def extract_location(locations):
     
     return L
 
-
-
-
-
 def extract_description(description):
     words = description.split(" ")
     processed_words = []
