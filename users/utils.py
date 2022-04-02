@@ -150,7 +150,7 @@ def extract_location(locations):
     return L
 
 
-from nltk.tokenize import word_tokenize
+
 
 
 def extract_description(description):
@@ -179,7 +179,7 @@ def recommendation(json_data, dataframe):
     # print(data_df)
     #Applying Bag of Words
     from sklearn.feature_extraction.text import CountVectorizer
-    cv1 = CountVectorizer(max_features = 1000,stop_words = 'english')
+    cv1 = CountVectorizer(max_features = 1000)
     vector = cv1.fit_transform(data_df['tags']).toarray()
     vector = pd.DataFrame(data = vector, columns=cv1.get_feature_names())
     
