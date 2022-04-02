@@ -153,7 +153,7 @@ import nltk
 from nltk.tokenize import word_tokenize
 nltk.download('stopwords')
 # from nltk.corpus import stopwords
-stop_words = nltk.corpus.stopwords.words('english')
+# stop_words = nltk.corpus.stopwords.words('english')
 
 def extract_description(description):
     words = word_tokenize(description)
@@ -161,8 +161,8 @@ def extract_description(description):
     for word in words:
         if word not in ['(', ')', ',', '.',':',' ']:
             word = word.lower()
-            if word not in stop_words:
-                processed_words.append(word)
+            
+            processed_words.append(word)
     return processed_words       
 
 def recommendation(json_data, dataframe):
