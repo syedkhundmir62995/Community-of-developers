@@ -151,8 +151,10 @@ def extract_location(locations):
 
 import nltk
 from nltk.tokenize import word_tokenize
+nltk.download('stopwords')
 from nltk.corpus import stopwords
 stop_words = stopwords.words('english')
+
 def extract_description(description):
     words = word_tokenize(description)
     processed_words = []
