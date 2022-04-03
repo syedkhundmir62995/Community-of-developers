@@ -224,4 +224,4 @@ if os.getcwd() == '/app':
 
 
 # Activate django heroku
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
