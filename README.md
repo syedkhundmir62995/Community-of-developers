@@ -3,8 +3,10 @@
 
 
 # Installation
-* 1 - clone repo 
-* 2 - create a virtual environment and activate
+1 - clone repo 
+2 - create a virtual environment and activate
+
+
 *  - pip install virtualenv
 *  - virtualenv envname
 *  - envname\scripts\activate
