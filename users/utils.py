@@ -162,7 +162,7 @@ def extract_description(description):
 def recommendation(json_data, dataframe):
     
     data = pd.DataFrame(data = json_data)
-    # print("Hellooo")
+    print("Hellooo", data)
     ref_df = pd.concat([dataframe, data], axis = 0)
     data_df = pd.concat([dataframe, data], axis = 0)
     data_df['Skills'] = data_df['Skills'].apply(extract_skills)
@@ -187,8 +187,8 @@ def recommendation(json_data, dataframe):
     intended_record = data_df.shape[0] -1
     # print(intended_record)
     similarity = pd.DataFrame(cosine_similarity(vector))
-    similar_records = similarity.iloc[intended_record].sort_values(ascending = False)[1:7]
-    
+    similar_records = similarity.iloc[intended_record].sort_values(ascending = False)[2:8]
+    print("SImilar records are: ",similar_records)
     u_id = []
     Names = []
     Description = []

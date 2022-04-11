@@ -20,7 +20,7 @@ form.addEventListener('submit', (e) => {
             console.log('DATA:', data.access)
             if (data.access) {
                 localStorage.setItem('token', data.access)
-                window.location = 'file:///C:/Users/Abid/Desktop/frontend/projects-list.html'
+                window.location = 'file:///home/syedkhundmir62995/desktop/demo/Community-of-developers/frontend/projects-list.html'
             } else {
                 alert('Username OR password did not work')
             }

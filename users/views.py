@@ -6,10 +6,11 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.urls import conf
 from django.db.models import Q
-from .models import Profile, Message
+from .models import Profile, Message, Skill
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm
 from .utils import recommendation, searchProfiles, paginateProfiles, get_dataset
 import pandas as pd
+from projects.models import Project
 
 def loginUser(request):
     page = 'login'
@@ -87,7 +88,35 @@ def profiles(request):
 
 def recommend(request,pk):
     dataset = get_dataset(request)
-    # print("The dataset is:", dataset)
+    print("The dataset is:", dataset)
+    current_userr = {}
+    curr_user_profile = Profile.objects.get(id = pk)
+    curr_skills = Skill.objects.filter(owner = pk)
+    current_userr['Name'] = [curr_user_profile.name]
+    user_skillset = []
+    for skilll in curr_skills:
+        user_skillset.append(skilll.name)
+    print(user_skillset)
+    final_skillset = ", ".join(user_skillset)
+    # current_userr['Skills'] = [final_skillset]
+
+    bio = curr_user_profile.bio
+    short_intro = curr_user_profile.short_intro
+    description = bio + " " + short_intro
+    current_userr['Description'] = [description]
+    current_userr['Skills'] = [final_skillset]
+    current_userr['Location'] = [curr_user_profile.location]
+
+    myproj = Project.objects.filter(owner = pk)
+    curr_user_projects = []
+    for proj in myproj:
+        curr_user_projects.append(proj.title)
+    curr_user_proj = ", ".join(curr_user_projects)
+    current_userr['Projects'] = [curr_user_proj]
+
+    print("*****************************************")
+    print(current_userr)
+
     current_user_data = {'Name': ['Syed Khundmir Azmi'],
              'Description': ['A motivated individual looking for an opportunity in Data Science with full end to end development practical knowledge'],
               'Skills': ['Python, Java'],
@@ -96,9 +125,10 @@ def recommend(request,pk):
              }
     
     # print(pd.DataFrame(recommendation(current_user_data, dataset)))
-    df =  pd.DataFrame(recommendation(current_user_data, dataset))
-
-    myprofiles = recommendation(current_user_data, dataset)
+    df =  pd.DataFrame(recommendation(current_userr, dataset))
+    print("DataFrame Is:")
+    print(df)
+    myprofiles = recommendation(current_userr, dataset)
     # print(myprofiles)
     query = []
     current_user = Profile.objects.get(user_id = request.user.id)
@@ -114,7 +144,7 @@ def recommend(request,pk):
     custom_range, profiles = paginateProfiles(request, my_profiles, 3)
 
     
-
+    print(my_profiles)
     return render(request, 'users/recommendations.html', context={"profiles": profiles})
 
 def userProfile(request, pk):

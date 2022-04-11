@@ -21,3 +21,4 @@ urlpatterns = [
     path('create-message/<str:pk>/', views.createMessage, name="create-message"),
     path('recommendation/<str:pk>', views.recommend, name="recommend"),
 ]
+

@@ -12,7 +12,7 @@ if (token) {
 logoutBtn.addEventListener('click', (e) => {
     e.preventDefault()
     localStorage.removeItem('token')
-    window.location = 'file:///C:/Users/Abid/Desktop/frontend/login.html'
+    window.location = 'file:///home/syedkhundmir62995/desktop/demo/Community-of-developers/frontend/login.html'
 })
 
 
